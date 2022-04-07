@@ -1,0 +1,208 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: agent
+  namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-node-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-secret-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-cert-manager-reader
+rules:
+  - apiGroups: ["cert-manager.io"]
+    resources:
+      - certificates
+      - certificaterequests
+      - issuers
+      - clusterissuers
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-googlecas-reader
+rules:
+  - apiGroups: ["cas-issuer.jetstack.io"]
+    resources:
+      - googlecasissuers
+      - googlecasclusterissuers
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-awspca-reader
+rules:
+  - apiGroups: ["awspca.cert-manager.io"]
+    resources:
+      - awspcaissuers
+      - awspcaclusterissuers
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-get-webhooks
+rules:
+  - apiGroups: ["admissionregistration.k8s.io"]
+    resources:
+      - validatingwebhookconfigurations
+      - mutatingwebhookconfigurations
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-openshift-reader
+rules:
+  - apiGroups: ["*.openshift.io"]
+    resources:
+      - routes
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-secret-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-secret-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-cert-manager-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-cert-manager-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-googlecas-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-googlecas-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jetstack-secure-agent-istio-reader
+rules:
+  - apiGroups: ["networking.istio.io"]
+    resources:
+      - virtualservices
+      - gateways
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-awspca-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-awspca-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-get-webhooks
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-get-webhooks
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-node-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-node-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-cluster-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-istio-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-istio-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jetstack-secure-agent-openshift-reader
+roleRef:
+  kind: ClusterRole
+  name: jetstack-secure-agent-openshift-reader
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: agent
+    namespace: jetstack-secure

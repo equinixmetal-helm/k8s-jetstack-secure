@@ -47,8 +47,8 @@ spec:
 
           resources:
             requests:
-              memory: 200Mi
-              cpu: 200m
+              memory: {{ .Values.agent.resources.requests.memory }}
+              cpu: {{ .Values.agent.resources.requests.cpu }}
             limits:
-              memory: 200Mi
-              cpu: 200m
+              memory: {{ .Values.agent.resources.limits.memory }}
+              cpu: {{ .Values.agent.resources.limits.cpu }}
